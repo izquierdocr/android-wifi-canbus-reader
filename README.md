@@ -1,2 +1,2 @@
-# android-wifi-canbus-reader
+# wifi-canbus-reader
 CANBus reader with wifi interface
