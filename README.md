@@ -1,2 +1,2 @@
-# wifi-canbus-reader
+# canbus-wifi-reader
 CANBus reader with wifi interface
