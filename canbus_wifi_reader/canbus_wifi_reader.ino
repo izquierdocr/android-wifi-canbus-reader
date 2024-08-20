@@ -257,7 +257,7 @@ void sniffCAN(void) {
   if (mcp2515.readMessage(&canMsgRead) == MCP2515::ERROR_OK) {
 
     // Show messages from this range
-    gotReading=false;
+    gotReading=true;
     //if ( (canMsgRead.can_id >= 0x7e8 and canMsgRead.can_id <= 0x7ef) or
     //     (canMsgRead.can_id >= 0x7d8 and canMsgRead.can_id <= 0x7df)
     //   ) gotReading=true;
@@ -270,7 +270,7 @@ void sniffCAN(void) {
 
     if (gotReading) {
       
-      
+      /*
       printCANData(canMsgPrev1);
       Serial.print("  |  ");
       printCANData(canMsgPrev2);
@@ -281,7 +281,7 @@ void sniffCAN(void) {
       Serial.print("  |  ");
       printCANData(canMsgPrev5);
       Serial.print("  |  ");
-      
+      */
 
       printCANData(canMsgRead);
       
@@ -294,7 +294,15 @@ void sniffCAN(void) {
       else {
         Serial.println("");
       }
+
+      if (canMsgRead.can_id >= 0x7e8 and canMsgRead.data[0] == 0x10) {
+        Serial.println("  ***********************************");
+      }
+
+
     }
+
+
     canMsgPrev5 = canMsgPrev4;
     canMsgPrev4 = canMsgPrev3;
     canMsgPrev3 = canMsgPrev2;
@@ -326,6 +334,7 @@ void setCANValueType(int valueType) {
 void setup() {
 
   Serial.begin(115200);
+  //Serial.begin(500000);
   configureCAN();
   setCANValueType(ENGINE_RPM);
   
@@ -334,12 +343,12 @@ void setup() {
 
 void loop() {
 
-  //sniffCAN();
+  sniffCAN();
 
   unsigned long currentMillis = millis();
   if(currentMillis - lastChangeTime >= CHANGE_CAN_TYPE_INTERVAL) {
     lastChangeTime = currentMillis;
-    turnFuelPumpOn();
+    //turnFuelPumpOn();
   }
 
 
